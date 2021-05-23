@@ -50,10 +50,34 @@ const GameBoard = () => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [player]);
 
-  const movePlayer = () => {
-    console.log('yo');
+  const movePlayer = (e) => {
+    switch (e.key) {
+      case 'ArrowRight':
+        player.x += player.speed;
+        player.frameY = 2;
+        player.moving = true;
+        break;
+      case 'ArrowLeft':
+        player.x -= player.speed;
+        player.frameY = 1;
+        player.moving = true;
+        break;
+      case 'ArrowUp':
+        player.y -= player.speed;
+        player.frameY = 3;
+        player.moving = true;
+        break;
+      case 'ArrowDown':
+        player.y += player.speed;
+        player.frameY = 0;
+        player.moving = true;
+        break;
+
+      default:
+        break;
+    }
   };
 
   const stopPlayer = () => {
