@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
+import Chewie from '../images/chewie.png';
+import BackgroundImg from '../images/background.png';
 
 const GameBoard = () => {
   const [player, setPlayer] = useState({
@@ -14,37 +16,40 @@ const GameBoard = () => {
 
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
-  // TODO: DRAW IMAGE NOT APPEARING IN CANVAS ?
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     canvas.style.width = `${window.innerWidth}px`;
     canvas.style.height = `${window.innerHeight}px`;
 
     const context = canvas.getContext('2d');
-    context.scale(2, 2);
+    contextRef.current = context;
+    // context.scale(2, 2);
 
     const playerSprite = document.createElement('img');
-    playerSprite.src = '../images/chewie.png';
+    playerSprite.src = Chewie;
     const background = document.createElement('img');
-    background.src = '../images/background.png';
+    background.src = BackgroundImg;
 
-    context.drawImage(background, 0, 0, canvas.width, canvas.height);
+    const intervalId = setInterval(() => {
+      context.drawImage(background, 0, 0, canvas.width, canvas.height);
 
-    context.drawImage(
-      playerSprite,
-      player.width * player.frameX,
-      player.height * player.frameY,
-      player.width,
-      player.height,
-      player.x,
-      player.y,
-      player.width,
-      player.height
-    );
+      context.drawImage(
+        playerSprite,
+        player.width * player.frameX,
+        player.height * player.frameY,
+        player.width,
+        player.height,
+        player.x,
+        player.y,
+        player.width,
+        player.height
+      );
+    }, 1000);
 
-    contextRef.current = context;
+    return () => clearInterval(intervalId);
   }, []);
 
   const movePlayer = () => {
@@ -56,13 +61,15 @@ const GameBoard = () => {
   };
 
   return (
-    <canvas
-      id="game-board"
-      ref={canvasRef}
-      onKeyDown={movePlayer}
-      onKeyUp={stopPlayer}
-      tabIndex="0"
-    ></canvas>
+    <div id="test">
+      <canvas
+        id="game-board"
+        ref={canvasRef}
+        onKeyDown={movePlayer}
+        onKeyUp={stopPlayer}
+        tabIndex="0"
+      ></canvas>
+    </div>
   );
 };
 
