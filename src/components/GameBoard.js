@@ -26,7 +26,6 @@ const GameBoard = () => {
 
     const context = canvas.getContext('2d');
     contextRef.current = context;
-    // context.scale(2, 2);
 
     const playerSprite = document.createElement('img');
     playerSprite.src = Chewie;
@@ -47,7 +46,7 @@ const GameBoard = () => {
         player.width,
         player.height
       );
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(intervalId);
   }, [player]);
