@@ -1,10 +1,10 @@
 import './styles/main.scss';
-import GameBoard from './components/GameBoard';
+import Player from './components/Player';
 
 function App() {
   return (
-    <div>
-      <GameBoard />
+    <div className="zone-container">
+      <Player skin="m1" />
     </div>
   );
 }
